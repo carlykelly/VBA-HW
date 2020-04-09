@@ -1,17 +1,15 @@
 Attribute VB_Name = "Module1"
-
-Sub stocks()
-
+Sub Stock_Analysis()
 Dim stockOpen As Double
 Dim stockClose As Double
 Dim yearlyChange As Double
 Dim ticker As String
-Dim a As Integer
+Dim outputRow As Integer
 Dim volume As LongLong
 Dim percentChange As Double
 
 For Each ws In Worksheets
-a = 2
+    outputRow = 2
 
 ' Finding yearly change for each ticker
     stockOpen = ws.Cells(2, 3).Value
@@ -22,27 +20,29 @@ a = 2
 
             If ws.Cells(i + 1, 1).Value = ws.Cells(i, 1).Value Then
                 stockClose = ws.Cells(i + 1, 6).Value
-'Assuming total volume is the sum of all volumes
+'Finding total volume is the sum of all volumes
                 volume = volume + ws.Cells(i + 1, 7).Value
                 ticker = ws.Cells(i, 1).Value
             Else
-'Assuming yearly change is the final close - initial open
+'Finding yearly change is the final close - initial open
                 yearlyChange = stockClose - stockOpen
 ' Calculating percent change if opened at 0
                 If stockOpen = 0 Then
-                    ws.Cells(a, 12) = 0
+                    percentChange = 0
                 Else
-                percentChange = yearlyChange / stockOpen
-                ws.Cells(a, 12).Value = percentChange
+                    percentChange = yearlyChange / stockOpen
                 End If
-                ws.Cells(a, 11).Value = yearlyChange
-                ws.Cells(a, 10).Value = ticker
-                ws.Cells(a, 13).Value = volume
+'Putting data for individual stock in the table
+                ws.Cells(outputRow, 10).Value = ticker
+                ws.Cells(outputRow, 11).Value = yearlyChange
+                ws.Cells(outputRow, 12).Value = percentChange
+                ws.Cells(outputRow, 13).Value = volume
+'Setting initial stock values for the next ticker
                 stockOpen = ws.Cells(i + 1, 3).Value
                 stockClose = ws.Cells(i + 1, 6).Value
                 volume = ws.Cells(i + 1, 7).Value
                 yearlyChange = 0
-                a = a + 1
+                outputRow = outputRow + 1
             End If
             
         Next i
@@ -64,4 +64,7 @@ ws.Cells(1, 12).Value = "Percent Change"
     ws.Cells(i, 12).NumberFormat = "0.00%"
     Next i
 Next ws
+
+
+
 End Sub

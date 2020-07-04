@@ -1,4 +1,6 @@
 # Excel VBA Projects
+The projects in this repository were assignments completed for The George Washington University Data Analysis and Visualization Bootcamp.
+
 In order to have full functionality on these Excel VBA Projects please click "Enable Macros" when you open each file.
 
 In `Choose-Your-Story.xlsm` the user is asked to enter a number into a given cell, then press a number. Depending on the number that is pressed, a different pop up window will appear.
